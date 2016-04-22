@@ -180,12 +180,13 @@ public class WorkflowController extends Controller {
             replyRes.add(listReply);
         }
 
-        JsonNode suggetionNode = APICall.callAPI(Constants.NEW_BACKEND + "suggestion/getSuggestionForWorkflow/" + wid.toString());
-        List<Suggestion> suggestionList = new ArrayList<>();
-        for (JsonNode n: suggetionNode) {
-            Suggestion cur = new Suggestion(n);
-            suggestionList.add(cur);
-        }
+        List<Suggestion> suggestionList = WorkflowBuilderSuggestion.getWorkflowSuggestion(wid);
+//        JsonNode suggetionNode = APICall.callAPI(Constants.NEW_BACKEND + "suggestion/getSuggestionForWorkflow/" + wid.toString());
+//        List<Suggestion> suggestionList = new ArrayList<>();
+//        for (JsonNode n: suggetionNode) {
+//            Suggestion cur = new Suggestion(n);
+//            suggestionList.add(cur);
+//        }
 
         return ok(workflowdetail.render(wf, commentRes, replyRes,  suggestionList, session("username"), Long.parseLong(session("id"))));
     }
